@@ -1,0 +1,19 @@
+{
+  "name": "ethereum-dapp-with-ipfs",
+  "version": "1.0.0",
+  "description": "Dapp with IPFS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DragonYu1010/Ethereum-Dapp-With-IPFS.git"
+  },
+  "author": "Top Blockchain Developer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DragonYu1010/Ethereum-Dapp-With-IPFS/issues"
+  },
+  "homepage": "https://github.com/DragonYu1010/Ethereum-Dapp-With-IPFS#readme"
+}
