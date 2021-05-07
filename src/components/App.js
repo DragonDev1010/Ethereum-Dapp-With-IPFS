@@ -1,8 +1,41 @@
 import React, { Component } from 'react';
-import logo from '../logo.png';
 import './App.css';
 
+const ipfsClient = require('ipfs-http-client')
+const ifps = ipfsClient({host: 'ipfs.infura.io', port: 5001, protocol: 'https'})
+
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      buffer: null,
+      memeHash: ''
+    }
+  }
+  captureFile = (event) => {
+    event.preventDefault()
+    
+    const file = event.target.files;
+    const reader = new window.FileReader()
+    reader.readAsArrayBuffer(file[0])
+    reader.onloadend = () => {
+      this.setState({buffer: Buffer(reader.result)})
+    }
+    console.log()
+  }
+
+  onSubmit = (event) => {
+    event.preventDefault()
+    ipfs.add(this.state.buffer, (error, result) => {
+      console.log('Ipfs result', result)
+      const memeHash = result[0].hash
+      this.setState({memeHash})
+      if(error) {
+        console.error(error)
+      }
+    })
+  }
   render() {
     return (
       <div>
@@ -13,7 +46,7 @@ class App extends Component {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Dapp University
+            Ethereum Dapp With IPFS
           </a>
         </nav>
         <div className="container-fluid mt-5">
@@ -25,20 +58,13 @@ class App extends Component {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <img src={logo} className="App-logo" alt="logo" />
+                  <img src={`https://ipfs.infura.io/ipfs/${this.state.memeHash}`} className="App-logo" alt="logo" />
                 </a>
-                <h1>Dapp University Starter Kit</h1>
-                <p>
-                  Edit <code>src/components/App.js</code> and save to reload.
-                </p>
-                <a
-                  className="App-link"
-                  href="http://www.dappuniversity.com/bootcamp"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  LEARN BLOCKCHAIN <u><b>NOW! </b></u>
-                </a>
+                <h2>Ethereum Dapp With IPFS</h2>
+                <form onSubmit = {this.onSubmit}>
+                  <input type="file" onChange={this.captureFile} />
+                  <input type="submit" />
+                </form>
               </div>
             </main>
           </div>
